@@ -1,292 +1,308 @@
-Perfect — this is the last missing layer to make this spec truly senior-grade and AI-proof.
+# Airbnb Admin Dashboard
 
-Below is the FINAL, COMPLETE AI AGENT BUILD SPEC, with Prettier, ESLint (strict), absolute imports, and zero ambiguity.
+A full-stack admin dashboard application for managing an Airbnb-style property rental platform. Built with modern web technologies and production-ready architecture patterns.
 
-You can hand this to Claude Code and expect clean, review-ready output.
+## 🎯 Project Overview
 
-⸻
+This is a comprehensive admin dashboard that allows administrators to manage properties (listings), users, and bookings for a vacation rental platform. The application demonstrates senior-level full-stack development skills with a focus on clean architecture, type safety, and maintainable code.
 
-🧠 AI AGENT – FINAL BUILD SPEC
+## ✨ Key Features
 
-Airbnb-Style Admin Dashboard (Portfolio Project)
+### Dashboard
 
-This document defines hard technical constraints.
-Violations are considered incorrect output.
+- **Real-time Statistics**: Overview cards showing total listings, users, bookings, and revenue
+- **Activity Monitoring**: Recent system activity and quick action panels
 
-⸻
+### Listings Management
 
-🎯 Project Goal
+- **CRUD Operations**: Create, read, update, and delete property listings
+- **Status Management**: Control listing status (Active, Inactive, Archived)
+- **Detailed Information**: Manage property details including location, pricing, capacity, and amenities
+- **Pagination**: Efficient server-side pagination for large datasets
 
-Build a production-style Airbnb Admin Dashboard using Next.js App Router with:
-• real backend (no mock data)
-• senior-level architecture
-• strict linting & formatting
-• testable components
-• clean, boring, professional code
+### User Management
 
-This project will be reviewed as portfolio work.
+- **User Administration**: View and manage all registered users
+- **Role Management**: Assign and manage user roles (Admin, User)
+- **User Status**: Block/unblock users as needed
+- **User Analytics**: View user statistics including listing and booking counts
 
-⸻
+### Booking Management
 
-🧱 Tech Stack (MANDATORY)
+- **Booking Overview**: View all reservations with detailed information
+- **Status Updates**: Update booking statuses (Pending, Confirmed, Completed, Cancelled)
+- **Guest Information**: Access guest details and contact information
+- **Revenue Tracking**: Monitor booking revenue and pricing
 
-Frontend
-• Next.js (App Router)
-• TypeScript (strict = true)
-• shadcn/ui
-• Install WITHOUT version tags
-• Use official shadcn CLI only
-• ❌ NEVER manually edit package.json
-• Zustand (client state only when justified)
-• TanStack Query OR Axios
-• Prefer server fetch
-• Prefer Server Actions
-• Client queries only when unavoidable
+### Authentication & Security
 
-Forms & Validation
-• React Hook Form
-• Zod
-• Zod schemas are the single source of truth
-• Backend + frontend must reuse schemas where possible
+- **Secure Login**: JWT-based authentication system
+- **Protected Routes**: Middleware-based route protection
+- **Session Management**: Secure session handling
 
-Backend
-• Next.js Route Handlers (app/api)
-• REST only
-• Prisma ORM
-• PostgreSQL
+## 🛠️ Tech Stack
 
-Tooling
-• ESLint (strict)
-• Prettier
-• Absolute imports only (no relative ../../../)
+### Frontend
 
-Testing
-• Jest or Vitest
-• React Testing Library
-• Components must be testable
+- **Next.js 16** (App Router) - React framework with server-side rendering
+- **TypeScript** (Strict Mode) - Type-safe development
+- **shadcn/ui** - Accessible, customizable component library
+- **Tailwind CSS** - Utility-first CSS framework
+- **TanStack Query** - Powerful data synchronization for React
+- **React Hook Form** - Performant forms with easy validation
+- **Zod** - TypeScript-first schema validation
 
-⸻
+### Backend
 
-📁 Folder Structure (STRICT)
+- **Next.js API Routes** - RESTful API endpoints
+- **Prisma ORM** - Type-safe database access
+- **PostgreSQL** - Relational database
+- **JWT (jose)** - Secure token-based authentication
+- **bcryptjs** - Password hashing
 
-src/
-├── app/
-│ ├── (auth)/
-│ ├── (dashboard)/
-│ ├── api/
-│ ├── layout.tsx
-│ └── page.tsx
-│
-├── features/
-├── components/
-├── lib/
-├── utils/
-├── types/
-├── tests/
-└── styles/
+### Development Tools
 
-⸻
+- **ESLint** - Code linting with strict rules
+- **Prettier** - Code formatting
+- **Jest** - Testing framework
+- **TypeScript** - Static type checking
 
-🔀 ABSOLUTE IMPORTS (MANDATORY)
+## 🏗️ Architecture Highlights
 
-tsconfig.json
+### Feature-Based Organization
 
-{
-"compilerOptions": {
-"baseUrl": "src",
-"paths": {
-"@app/_": ["app/_"],
-"@features/_": ["features/_"],
-"@components/_": ["components/_"],
-"@lib/_": ["lib/_"],
-"@utils/_": ["utils/_"],
-"@types/_": ["types/_"]
-}
-}
-}
+The codebase follows a feature-based architecture where each domain (bookings, listings, users, auth) owns its:
 
-❌ Forbidden
+- Components
+- API calls
+- Types
+- Validation schemas
+- Custom hooks
 
-import Button from '../../../components/Button'
+This ensures clear boundaries and maintainability.
 
-✅ Required
+### Absolute Imports
 
+All imports use absolute paths with TypeScript path aliases:
+
+```typescript
 import { Button } from '@components/ui/button'
+import { useBookings } from '@features/bookings/hooks/use-bookings'
+```
 
-⸻
+### Type Safety
 
-🎨 Prettier (MANDATORY)
+- Strict TypeScript configuration
+- Shared Zod schemas between frontend and backend
+- Type-safe API clients
+- No `any` types allowed
 
-.prettierrc
+### Server-Side Pagination
 
-{
-"semi": false,
-"singleQuote": true,
-"trailingComma": "es5",
-"printWidth": 100,
-"tabWidth": 2,
-"arrowParens": "avoid"
-}
+Efficient pagination implemented at both API and frontend levels:
 
-Rules
-• Prettier controls formatting
-• ESLint must not conflict with Prettier
-• No manual formatting
+- Database queries use `skip` and `take` for optimal performance
+- React Query caches each page separately
+- Only current page data is fetched and displayed
 
-⸻
+### Component Architecture
 
-🚨 ESLint (STRICT MODE)
+- Reusable UI components built on shadcn/ui
+- Feature-specific components are self-contained
+- Testable components with clear prop interfaces
+- No business logic in UI components
 
-Required ESLint Principles
-• No any
-• No unused variables
-• No implicit returns
-• No default exports for shared components
-• Explicit dependency arrays
-• No console logs (except in dev utils)
+## 📁 Project Structure
 
-.eslintrc.json
+```
+src/
+├── app/                    # Next.js App Router
+│   ├── (auth)/            # Authentication routes
+│   ├── (dashboard)/       # Protected dashboard routes
+│   └── api/               # API route handlers
+├── components/            # Shared UI components
+│   ├── ui/                # shadcn/ui components
+│   └── providers/         # React context providers
+├── features/              # Feature modules
+│   ├── auth/              # Authentication feature
+│   ├── bookings/          # Bookings feature
+│   ├── listings/         # Listings feature
+│   └── users/            # Users feature
+├── lib/                   # Shared utilities
+│   ├── api/              # API client configuration
+│   ├── auth.ts           # Authentication utilities
+│   ├── prisma.ts         # Prisma client
+│   └── validations/      # Zod schemas
+└── tests/                 # Test files
+```
 
-{
-"extends": [
-"next/core-web-vitals",
-"eslint:recommended",
-"plugin:@typescript-eslint/recommended",
-"plugin:react-hooks/recommended",
-"prettier"
-],
-"rules": {
-"@typescript-eslint/no-explicit-any": "error",
-"@typescript-eslint/no-unused-vars": ["error"],
-"@typescript-eslint/explicit-function-return-type": [
-"warn",
-{ "allowExpressions": true }
-],
-"react-hooks/exhaustive-deps": "error",
-"no-console": ["error", { "allow": ["warn", "error"] }],
-"import/no-default-export": "off"
-}
-}
+## 🚀 Getting Started
 
-⸻
+### Prerequisites
 
-🧠 Architectural Rules (NON-NEGOTIABLE)
+- Node.js 18+ and npm
+- PostgreSQL database
+- Git
 
-1️⃣ App Router = Routing Only
-• No business logic
-• No data transformation
-• Pages compose feature components only
+### Installation
 
-export default function Page() {
-return <ListingsTable />
-}
+1. **Clone the repository**
 
-⸻
+   ```bash
+   git clone <repository-url>
+   cd airbnb-admin-dashboard
+   ```
 
-2️⃣ Feature Ownership
+2. **Install dependencies**
 
-Each feature owns:
-• components
-• api calls
-• schemas
-• types
-• utils
+   ```bash
+   npm install
+   ```
 
-❌ No cross-feature imports
-❌ No global services/ folder
+3. **Set up environment variables**
+   Create a `.env` file in the root directory:
 
-⸻
+   ```env
+   DATABASE_URL="postgresql://user:password@localhost:5432/airbnb_admin"
+   JWT_SECRET="your-secret-key-here"
+   NODE_ENV="development"
+   ```
 
-3️⃣ State Management
-• Server state by default
-• Local component state first
-• Zustand only when shared client state is unavoidable
+4. **Set up the database**
 
-⸻
+   ```bash
+   npx prisma migrate dev
+   npx prisma generate
+   npx prisma db seed
+   ```
 
-4️⃣ Data Fetching Priority 1. Server fetch 2. Server Actions 3. TanStack Query / Axios (client only)
+5. **Run the development server**
 
-⸻
+   ```bash
+   npm run dev
+   ```
 
-5️⃣ Validation
-• Zod schemas are reused
-• Backend validates every mutation
-• Forms use the same schema
+6. **Open your browser**
+   Navigate to [http://localhost:3000](http://localhost:3000)
 
-⸻
+### Default Login Credentials
 
-6️⃣ Testability Rules
+After seeding the database, you can log in with:
 
-Components must:
-• Receive data via props
-• Avoid direct fetch/DB calls
-• Have deterministic rendering
-• Be testable with RTL
+- Email: `admin@example.com`
+- Password: `admin123` (or check seed file for current password)
 
-<ListingsTable listings={listings} />
+## 📝 Available Scripts
 
-⸻
+- `npm run dev` - Start development server
+- `npm run build` - Build for production
+- `npm run start` - Start production server
+- `npm run lint` - Run ESLint
+- `npm run format` - Format code with Prettier
+- `npm run format:check` - Check code formatting
+- `npm test` - Run tests
+- `npm run test:watch` - Run tests in watch mode
+- `npm run test:coverage` - Generate test coverage report
 
-🗃️ Database Schema (Prisma)
+## 🎨 Design & UI
 
-(unchanged — already correct and senior)
+The application uses **shadcn/ui** components built on Radix UI primitives, ensuring:
 
-⸻
+- **Accessibility**: WCAG compliant components
+- **Customization**: Easy theming and styling
+- **Consistency**: Unified design system
+- **Modern UX**: Clean, professional interface
 
-🌐 API Contracts
+## 🔒 Security Features
 
-(unchanged — REST, minimal, predictable)
+- **Password Hashing**: bcryptjs for secure password storage
+- **JWT Authentication**: Secure token-based auth
+- **Route Protection**: Middleware-based route guards
+- **Input Validation**: Zod schemas validate all inputs
+- **SQL Injection Prevention**: Prisma ORM parameterized queries
 
-⸻
+## 📊 Database Schema
 
-🧩 UI Components
-• Built on shadcn/ui
-• No custom styling hacks
-• No magic props
-• Accessibility preserved
+The application uses PostgreSQL with the following main entities:
 
-⸻
+- **Users**: Admin and customer accounts with role-based access
+- **Listings**: Property listings with details and status
+- **Bookings**: Reservations linking users to listings
 
-🧪 Seed Data
-• Prisma seed script
-• Small, realistic dataset
-• Deterministic data
+See `prisma/schema.prisma` for the complete schema definition.
 
-⸻
+## 🧪 Testing
 
-📘 README (REQUIRED)
+The project includes Jest and React Testing Library for:
 
-Must explain: 1. Architecture decisions 2. Why shadcn 3. Why strict ESLint 4. Absolute imports rationale 5. Server vs client decisions 6. Trade-offs 7. What would change in real prod
+- Component testing
+- Unit tests
+- Integration tests
 
-⸻
+Run tests with:
 
-🚫 ABSOLUTELY FORBIDDEN
+```bash
+npm test
+```
 
-❌ Manual package.json edits
-❌ Version-pinned shadcn installs
-❌ Relative imports
-❌ Mock data
-❌ Untestable components
-❌ Over-engineering
+## 🎯 What Makes This Portfolio-Worthy
 
-⸻
+### Production-Ready Code
 
-🏁 Success Definition
+- Strict TypeScript configuration
+- Comprehensive error handling
+- Input validation on both client and server
+- Type-safe API contracts
 
-If a senior reviewer opens the repo, they should think:
+### Scalable Architecture
 
-“This codebase feels calm, predictable, and production-ready.”
+- Feature-based organization for easy scaling
+- Efficient pagination for large datasets
+- Optimized database queries
+- Proper separation of concerns
 
-⸻
+### Best Practices
 
-Next (optional)
+- ESLint strict mode enforcement
+- Consistent code formatting with Prettier
+- Absolute imports for maintainability
+- Reusable component patterns
 
-I can:
-• Generate the exact Claude Code prompt
-• Write the README.md
-• Define test cases
-• Define commit conventions
-• Review the generated code like a hiring manager
+### Modern Stack
 
-Say the word:
-👉 “Generate Claude Code prompt”
+- Latest Next.js App Router
+- Type-safe ORM with Prisma
+- Modern React patterns (hooks, context)
+- Server-side rendering capabilities
+
+### Developer Experience
+
+- Clear project structure
+- Comprehensive type safety
+- Easy to extend and maintain
+- Well-documented code
+
+## 🔮 Future Enhancements
+
+Potential improvements for production deployment:
+
+- Real-time updates with WebSockets
+- Advanced filtering and search
+- Export functionality (CSV, PDF)
+- Email notifications
+- Analytics dashboard
+- Image upload and management
+- Multi-language support
+- Role-based permissions system
+
+## 📄 License
+
+This project is part of a portfolio and is available for review purposes.
+
+## 👤 Author
+
+Built as a portfolio project to demonstrate full-stack development capabilities.
+
+---
+
+**Note**: This is a portfolio project demonstrating production-ready development practices. For production use, additional considerations such as error monitoring, logging, and deployment infrastructure would be required.
